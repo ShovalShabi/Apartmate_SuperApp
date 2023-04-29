@@ -1,0 +1,10 @@
+{
+  "userId": {
+    "superapp": "2023b.dor.ferenc",
+    "email": "jill@demo.org"
+  },
+  "role": "STUDENT",
+  "username": "Jill Smith",
+  "avatar": "J",
+  "extraField": "this should not be here"
+}

@@ -1,0 +1,26 @@
+{
+  "commandId": {
+    "superapp": "2023b.dor.ferenc",
+    "miniapp": "dummyApp",
+    "internalCommandId": ""
+  },
+  "command": "doSomething",
+  "targetObject": {
+    "objectId": {
+      "superapp": "2023b.dor.ferenc",
+      "internalObjectId": ""
+    }
+  },
+  "invocationTimestamp": "2023-03-11T10:17:54.933+0000",
+  "invokedBy": {
+    "userId": {
+      "superapp": "2023b.dor.ferenc",
+      "email": "jane@demo.org"
+    }
+  },
+  "commandAttributes": {
+    "key1": {
+      "key1subkey": "can be anything you wish, even a nested json"
+    }
+  }
+}

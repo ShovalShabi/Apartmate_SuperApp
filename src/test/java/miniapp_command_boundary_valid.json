@@ -1,0 +1,26 @@
+{
+	"commandId": {
+		"superapp": "2023b.dor.ferenc",
+		"miniapp": "name",
+		"internalCommandId": "4d8491f4-de7e-4496-915d-fd3d55ec7158"
+	},
+	"command": "doSomething",
+	"targetObject": {
+		"objectIdBoundary": {
+			"superapp": "2023b.dor.ferenc",
+			"internalObjectId": "4d8491f4-de7e-4496-915d-fd3d55ec7158"
+		}
+	},
+	"invocationTimestamp": "2023-03-11T10:17:54.933+00:00",
+	"invokedBy": {
+		"userId": {
+			"superapp": "2023b.dor.ferenc",
+			"email": "jane@demo.org"
+		}
+	},
+	"commandAttributes": {
+		"key1": {
+			"key1subkey": "can be anything you wish, even a nested json"
+		}
+	}
+}

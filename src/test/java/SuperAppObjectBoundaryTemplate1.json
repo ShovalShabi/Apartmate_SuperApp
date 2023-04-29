@@ -1,0 +1,26 @@
+{
+  "objectId": {
+    "superapp": "2023b.dor.ferenc",
+    "internalObjectId": "a85fdf22-7bfd-422b-bc9b-be6199367f9a"
+  },
+  "type": "dummyType",
+  "alias": "demo instance",
+  "active": true,
+  "creationTimestamp": "2023-04-28T10:03:52.819+00:00",
+  "location": {
+    "lat": 35.154,
+    "lng": 30.81
+  },
+  "createdBy": {
+    "userId": {
+      "superapp": "2023b.dor.ferenc",
+      "email": "bob@test.com"
+    }
+  },
+  "objectDetails": {
+    "key1": "can be set to any value you wish",
+    "key2": "you can also name the attributes any name you like",
+    "key3": 9.99,
+    "key4": true
+  }
+}
