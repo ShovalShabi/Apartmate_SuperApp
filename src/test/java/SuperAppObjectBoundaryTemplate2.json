@@ -1,0 +1,26 @@
+{
+  "superAppObjectIdBoundary": {
+    "superapp": "2023b.dor.ferenc",
+    "internalObjectId": "b53acf26-6f05-42c1-b53b-991247b6d724"
+  },
+  "type": "dummyType",
+  "alias": "demo instance",
+  "active": true,
+  "creationTimeStamp": "2023-04-16T13:59:39.678+00:00",
+  "location": {
+    "lat": 32.1133,
+    "lng": 34.818
+  },
+  "createdBy": {
+    "userId": {
+      "superapp": "2023b.dor.ferenc",
+      "email": "jill@demo.org"
+    }
+  },
+  "objectDetails": {
+    "key1": "can be set to any value you wish",
+    "key2": "you can also name the attributes any name you like",
+    "key3": 9.99,
+    "key4": true
+  }
+}
