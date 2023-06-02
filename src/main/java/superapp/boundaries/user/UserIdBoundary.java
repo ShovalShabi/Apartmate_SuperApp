@@ -1,5 +1,7 @@
 package superapp.boundaries.user;
 
+import java.util.Objects;
+
 /**
  * A class which is trusted on user identifier to specific superApp.
  * The class has email that associated with the user and superApp specifier for specific super App.
@@ -75,5 +77,29 @@ public class UserIdBoundary {
     @Override
     public String toString() {
         return "UserIdBoundary{" + "superapp='" + superapp + '\'' + ", email='" + email + '\'' + '}';
+    }
+
+    /**
+     * Compares this UserIdBoundary to the specified object for equality.
+     *
+     * @param o the object to compare
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserIdBoundary that = (UserIdBoundary) o;
+        return Objects.equals(superapp, that.superapp) && Objects.equals(email, that.email);
+    }
+
+    /**
+     * Returns a hash code value for the UserIdBoundary object.
+     *
+     * @return the hash code value
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(superapp, email);
     }
 }

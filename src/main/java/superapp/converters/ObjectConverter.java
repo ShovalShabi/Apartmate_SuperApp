@@ -1,20 +1,29 @@
 package superapp.converters;
 
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import superapp.boundaries.object.SuperAppObjectBoundary;
 import superapp.boundaries.object.SuperAppObjectIdBoundary;
 import superapp.data.SuperAppObjectEntity;
 import superapp.utils.Invokers.UserIdInvoker;
 import superapp.utils.Location;
 
+import java.util.Map;
+
+/**
+ * The ObjectConverter class is responsible for converting between SuperAppObjectBoundary objects and SuperAppObjectEntity objects.
+ */
 @Component
 public class ObjectConverter {
+
+    private final ObjectMapper mapper;
 
     /**
      * The ObjectConverter class is responsible for converting between SuperAppObjectBoundary objects
      * and SuperAppObjectEntity objects.
      */
-    public ObjectConverter() {}
+    public ObjectConverter() { this.mapper = new ObjectMapper(); }
 
     /**
      * Converts a SuperAppObjectEntity to a SuperAppObjectBoundary.
@@ -33,8 +42,8 @@ public class ObjectConverter {
         superAppObjectBoundary.setCreationTimestamp(entity.getCreationTimeStamp());
 
         Location location = new Location();
-        location.setLat(entity.getLat());
-        location.setLng(entity.getLng());
+        location.setLat(entity.getLocation().getX());
+        location.setLng(entity.getLocation().getY());
         superAppObjectBoundary.setLocation(location);
 
         UserIdInvoker userIdInvoker = new UserIdInvoker();
@@ -58,13 +67,18 @@ public class ObjectConverter {
         superAppObjectEntity.setAlias(object.getAlias());
         superAppObjectEntity.setActive(object.getActive());
         superAppObjectEntity.setCreationTimeStamp(object.getCreationTimestamp());
-        superAppObjectEntity.setLat(object.getLocation().getLat());
-        superAppObjectEntity.setLng(object.getLocation().getLng());
+        superAppObjectEntity.setLocation(new GeoJsonPoint(object.getLocation().getLat(), object.getLocation().getLng()));
         superAppObjectEntity.setUserIdInvoker(object.getCreatedBy());
         superAppObjectEntity.setObjectDetails(object.getObjectDetails());
         return superAppObjectEntity;
     }
 
+    /**
+     * Creates an ID for a SuperAppObjectIdBoundary based on its components.
+     *
+     * @param superAppObjectIdBoundary the SuperAppObjectIdBoundary from which to create the ID
+     * @return a String representing the created ID
+     */
     public String createID(SuperAppObjectIdBoundary superAppObjectIdBoundary) {
         String idFormat = "%s$%s";
         return idFormat.formatted(
@@ -73,12 +87,32 @@ public class ObjectConverter {
         );
     }
 
+    /**
+     * Creates an ID for a SuperAppObjectBoundary based on the provided components.
+     *
+     * @param objectSuperAppBoundary the SuperApp boundary component of the ID
+     * @param internalObjectId the internal object ID component of the ID
+     * @return a String representing the created ID
+     */
     public String createID(String objectSuperAppBoundary, String internalObjectId) {
         String idFormat = "%s$%s";
         return idFormat.formatted(
                 objectSuperAppBoundary,
                 internalObjectId
         );
+    }
+
+
+    /**
+     * Retrieves an ID for a SuperAppObjectBoundary based on the provided components.
+     *
+     * @param id the internal object ID constructed with the superapp identifier component of the ID
+     * @return a String representing the created UUID
+     */
+    public String retrieveInternalObjectID(String id) {
+        String[] arr = id.split("\\$");
+        return arr[1]; // The internal object ID
+
     }
 
 }

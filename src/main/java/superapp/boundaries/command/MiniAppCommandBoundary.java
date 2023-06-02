@@ -1,6 +1,5 @@
 package superapp.boundaries.command;
 
-import org.springframework.beans.factory.annotation.Value;
 import superapp.utils.Invokers.ObjectIdInvoker;
 import superapp.utils.Invokers.UserIdInvoker;
 

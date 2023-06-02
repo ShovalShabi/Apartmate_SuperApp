@@ -4,7 +4,6 @@ package superapp.boundaries.command;
  * CommandIdBoundary is a class representing a command identifier that contains information about the superapp, miniapp, and internal object ID.
  * It provides methods for setting and getting values of these parameters and for creating instances of the CommandIdBoundary class
  */
-
 public class MiniAppCommandIdBoundary {
 
     private String superapp; // The superapp parameter of the command identifier
@@ -96,11 +95,11 @@ public class MiniAppCommandIdBoundary {
         this.internalCommandId = internalCommandId;
     }
 
-    /**
-     * A boundary class representing a unique identifier for a command in a system, consisting of a combination of the
-     * superapp, miniapp and internalCommandId.
-     */
 
+    /**
+     * The string representation includes the values of the 'superapp', 'miniapp', and 'internalCommandId' properties.
+     * @return a string representation of the User object
+     */
     @Override
     public String toString() {
         return "CommandIdBoundary{" +

@@ -12,9 +12,15 @@ import superapp.logic.UsersServiceAdvanced;
  * It provides methods for creating new users, logging in existing users, and updating user data.
  */
 @RestController
+@CrossOrigin
 public class UserController {
     private UsersServiceAdvanced usersServiceAdvanced;
 
+    /**
+     * Sets the UsersServiceAdvanced dependency using the Autowired annotation.
+     *
+     * @param usersServiceAdvanced the UsersServiceAdvanced instance to set
+     */
     @Autowired
     public void setUsersService(UsersServiceAdvanced usersServiceAdvanced) {
         this.usersServiceAdvanced = usersServiceAdvanced;

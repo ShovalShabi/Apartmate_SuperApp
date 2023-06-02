@@ -63,6 +63,14 @@ public class Location {
         this.lng = lng;
     }
 
+    /**
+     * Returns a string representation of the Location object.
+     * <p>
+     * The string representation is in the format "Location{lat=<lat>, lng=<lng>}".
+     * The <lat> and <lng> placeholders are replaced with the actual latitude and longitude values.
+     *
+     * @return a string representation of the Location object
+     */
     @Override
     public String toString() {
         return "Location{" +
@@ -71,6 +79,14 @@ public class Location {
                 '}';
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * <p>
+     * Two Location objects are considered equal if their latitude and longitude values are equal.
+     *
+     * @param o the reference object with which to compare
+     * @return true if this object is the same as the o argument; false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +95,13 @@ public class Location {
         return lat.equals(location.lat) && lng.equals(location.lng);
     }
 
+    /**
+     * Returns a hash code value for the Location object.
+     * <p>
+     * The hash code is generated based on the latitude and longitude values.
+     *
+     * @return a hash code value for the Location object
+     */
     @Override
     public int hashCode() {
         return Objects.hash(lat, lng);

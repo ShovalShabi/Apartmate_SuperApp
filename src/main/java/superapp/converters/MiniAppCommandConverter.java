@@ -9,10 +9,17 @@ import superapp.data.MiniAppCommandEntity;
 import superapp.utils.Invokers.ObjectIdInvoker;
 import superapp.utils.Invokers.UserIdInvoker;
 
+/**
+ * The MiniAppCommandConverter class is responsible for converting MiniAppCommandEntity objects to MiniAppCommandBoundary objects and vice versa.
+ */
 @Component
 public class MiniAppCommandConverter {
 
-
+    /**
+     * Converts a MiniAppCommandEntity to a MiniAppCommandBoundary.
+     *
+     * @return a MiniAppCommandBoundary object
+     */
     public MiniAppCommandConverter() {
     }
 
@@ -53,7 +60,12 @@ public class MiniAppCommandConverter {
         return entity;
     }
 
-    //TODO: add documentation
+    /**
+     * Creates an ID for a MiniAppCommandBoundary based on its attributes.
+     *
+     * @param miniAppCommandBoundary the MiniAppCommandBoundary for which to create the ID
+     * @return a String representing the created ID
+     */
     private String createID(MiniAppCommandBoundary miniAppCommandBoundary) {
         String idFormat = "%s$%s$%s";
         return idFormat.formatted(

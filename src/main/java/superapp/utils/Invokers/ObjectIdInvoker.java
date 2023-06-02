@@ -42,6 +42,14 @@ public class ObjectIdInvoker {
         this.objectId = superAppObjectIdBoundary;
     }
 
+    /**
+     * Returns a string representation of the ObjectIdInvoker object.
+     * <p>
+     * The string representation is in the format "ObjectIdInvoker{objectId=<objectId>}".
+     * The <objectId> placeholder is replaced with the actual objectId value.
+     *
+     * @return a string representation of the ObjectIdInvoker object
+     */
     @Override
     public String toString() {
         return "ObjectIdInvoker{" +

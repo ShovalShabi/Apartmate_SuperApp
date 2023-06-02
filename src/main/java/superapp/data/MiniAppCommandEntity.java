@@ -8,28 +8,35 @@ import superapp.utils.Invokers.UserIdInvoker;
 import java.util.Date;
 import java.util.Map;
 
-
+/**
+ * The MiniAppCommandEntity class represents a mini app command entity in the system.
+ * It is annotated with @Document to indicate that instances of this class can be persisted to a database collection.
+ * The collection name for this entity is "MINI_APP_COMMAND".
+ */
 @Document(collection = "MINI_APP_COMMAND")
 public class MiniAppCommandEntity {
 
     // Instance variables:
     @Id
     private String id; //The ID of the SuperApp.
+    private String miniapp; // The command miniapp.
     private String command; //The command string.
     private ObjectIdInvoker targetObject; //The ID of the target object.
     private Date invocationTimestamp; //The time when the command was invoked.
     private UserIdInvoker invokedBy; //The ID of the user who invoked the command.
     private Map<String, Object> commandAttributes; //The attributes of the command.
-    public MiniAppCommandEntity() {} //Empty constructor.
+
+    public MiniAppCommandEntity() {
+    } //Empty constructor.
 
     /**
      * Constructor with parameters.
      *
-     * @param command The command string.
-     * @param targetObject The ID of the target object.
+     * @param command             The command string.
+     * @param targetObject        The ID of the target object.
      * @param invocationTimestamp The time when the command was invoked.
-     * @param invokedBy The ID of the user who invoked the command.
-     * @param commandAttributes The attributes of the command.
+     * @param invokedBy           The ID of the user who invoked the command.
+     * @param commandAttributes   The attributes of the command.
      */
     public MiniAppCommandEntity(String id,
                                 String command, ObjectIdInvoker targetObject, Date invocationTimestamp,
@@ -42,12 +49,30 @@ public class MiniAppCommandEntity {
         this.commandAttributes = commandAttributes;
     }
 
+    /**
+     * Retrieves the ID of the object.
+     *
+     * @return the ID of the object
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of the object.
+     *
+     * @param id the ID to set
+     */
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMiniapp() {
+        return miniapp;
+    }
+
+    public void setMiniapp(String miniapp) {
+        this.miniapp = miniapp;
     }
 
     /**
@@ -140,6 +165,11 @@ public class MiniAppCommandEntity {
         this.invocationTimestamp = invocationTimestamp;
     }
 
+    /**
+     * Returns a string representation of the MiniAppCommandEntity.
+     *
+     * @return a string representation of the object
+     */
     @Override
     public String toString() {
         return "MiniAppCommandEntity{" +

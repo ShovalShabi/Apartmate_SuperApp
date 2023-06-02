@@ -206,6 +206,11 @@ public class SuperAppObjectBoundary{
         return "ObjectBoundary{" + "objectId=" + objectId + ", type='" + type + '\'' + ", alias='" + alias + '\'' + ", active=" + active + ", creationTimeStamp=" + creationTimestamp + ", location=" + location + ", userId=" + createdBy + ", objectDetails=" + objectDetails + '}';
     }
 
+    /**
+     * Compares this SuperAppObjectBoundary to the specified object for equality.
+     * @param o the object to compare
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -214,6 +219,10 @@ public class SuperAppObjectBoundary{
         return Objects.equals(objectId, that.objectId);
     }
 
+    /**
+     * Returns a hash code value for the SuperAppObjectBoundary object.
+     * @return the hash code value
+     */
     @Override
     public int hashCode() {
         return Objects.hash(objectId, type, alias, active, creationTimestamp, location, createdBy, objectDetails);

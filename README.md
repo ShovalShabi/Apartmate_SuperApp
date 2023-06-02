@@ -20,13 +20,6 @@ follow the following steps precisely.
 After you have done all the previous steps now let's configure the
 resources root folder and the source root folder.
 
-### Resources Root Folder and Source Root Folder ###
-
-* Right-click on the 'resources' folder under src > main > Select 'Excluded'
-* Right-click on the 'src' folder and press 'Mark Directory as'  > Select 'Unmark as source root'
-* Right-click on the 'resources' folder and press 'Mark Directory as' > Select 'Resource Root'
-* Right-click on the 'src' folder and press 'Mark Directory as' > Select the 'Sources Root' option
-
 ### Gradle setup ###
 
 * Click on the 'File' in the upper left corner of the window
@@ -38,5 +31,14 @@ resources root folder and the source root folder.
 * Under 'version' please select 17, and under 'vendor' please choose 'Amazon Correcto 17.0.6'
 
 When hitting the run button, gradle should download all the dependencies by itself and tomcat should be up and running.
+
+
+### Tests ###
+
+* Make sure your `MongoDB` does ***NOT*** have any Test database on it, or that at least it's completely empty.
+* The test database is created upon running the test's, no need to create it by yourselves.
+* There are plenty of tests and some of them are for asynchronous methods, so please be patient until all tests are finished.
+* ***IMPORTANT*** the test database is different from the original database, so no need to worry about that.
+* Don't delete the original one by accident ;)
 
 *Thank you for your time and enjoy our application! :)*

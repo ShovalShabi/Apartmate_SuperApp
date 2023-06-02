@@ -41,6 +41,14 @@ public class UserIdInvoker {
         this.userId = userId;
     }
 
+    /**
+     * Returns a string representation of the UserIdInvoker object.
+     * <p>
+     * The string representation is in the format "UserIdInvoker{userId=<userId>}".
+     * The <userId> placeholder is replaced with the actual userId value.
+     *
+     * @return a string representation of the UserIdInvoker object
+     */
     @Override
     public String toString() {
         return "UserIdInvoker{" +

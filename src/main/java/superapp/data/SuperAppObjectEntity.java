@@ -1,6 +1,8 @@
 package superapp.data;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import superapp.utils.Invokers.UserIdInvoker;
@@ -16,6 +18,7 @@ import java.util.*;
  */
 
 @Document(collection = "SUPER_APP_OBJECTS")
+@CompoundIndex(def = "{'location': '2dsphere'}", name = "location_index")
 public class SuperAppObjectEntity {
     @Id
     private String id;  //specific superApp specifier
@@ -23,25 +26,40 @@ public class SuperAppObjectEntity {
     private String alias; // Alias of the object boundary
     private Boolean active; // Whether the object boundary is active or not
     private Date creationTimeStamp; // Time when the object boundary was created
-    private Double lat; // The latitude of the location
-    private Double lng; // The longitude of the location.
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private GeoJsonPoint location; // used to locate objects within earth's sphere
     private UserIdInvoker userIdInvoker;  //The email address associated with the user ID. comes from UserIdInvoker -> UserIdBoundary.email
     private Map<String, Object> objectDetails; // The other details of the object
     @DBRef(lazy = true)
-    private List<SuperAppObjectEntity> children; // ObjectEntity Children
+    private Set<SuperAppObjectEntity> children; // ObjectEntity Children
     @DBRef(lazy = true)
-    private List<SuperAppObjectEntity> parents; // ObjectEntity Parents
+    private Set<SuperAppObjectEntity> parents; // ObjectEntity Parents
 
-    public SuperAppObjectEntity(String id, String type, String alias, Boolean active, Date creationTimeStamp, Double lat, Double lng, UserIdInvoker userIdInvoker, Map<String, Object> objectDetails) {
+    /**
+     * Constructs a SuperAppObjectEntity with the specified parameters.
+     *
+     * @param id                the ID of the super app object
+     * @param type              the type of the super app object
+     * @param alias             the alias of the super app object
+     * @param active            indicates whether the super app object is active
+     * @param creationTimeStamp the timestamp of when the super app object was created
+     * @param location          the location of the super app object's location
+     * @param userIdInvoker     the user ID invoker associated with the super app object
+     * @param objectDetails     additional details of the super app object
+     */
+    public SuperAppObjectEntity(String id, String type, String alias, Boolean active, Date creationTimeStamp,
+                                GeoJsonPoint location, UserIdInvoker userIdInvoker, Map<String, Object> objectDetails,
+                                Set<SuperAppObjectEntity> children, Set<SuperAppObjectEntity> parents) {
         this.id = id;
         this.type = type;
         this.alias = alias;
         this.active = active;
         this.creationTimeStamp = creationTimeStamp;
-        this.lat = lat;
-        this.lng = lng;
+        this.location = location;
         this.userIdInvoker = userIdInvoker;
         this.objectDetails = objectDetails;
+        this.children = children;
+        this.parents = parents;
     }
 
     /**
@@ -50,14 +68,24 @@ public class SuperAppObjectEntity {
      */
     public SuperAppObjectEntity() {
         this.objectDetails = new TreeMap<>();
-        this.children = new ArrayList<>();
-        this.parents = new ArrayList<>();
+        this.children = new TreeSet<>();
+        this.parents = new TreeSet<>();
     }
 
+    /**
+     * Retrieves the ID of the super app object.
+     *
+     * @return the ID of the super app object
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of the super app object.
+     *
+     * @param id the ID of the super app object
+     */
     public void setId(String id) {
         this.id = id;
     }
@@ -135,45 +163,37 @@ public class SuperAppObjectEntity {
     }
 
     /**
-     * Returns the latitude of the object.
-     *
-     * @return The latitude of the object.
-     */
-    public Double getLat() {
-        return lat;
-    }
-
-    /**
-     * Sets the latitude of the object.
-     *
-     * @param lat The latitude of the object.
-     */
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    /**
-     * Returns the longitude of the object.
-     *
-     * @return The longitude of the object.
-     */
-    public Double getLng() {
-        return lng;
-    }
-
-    /**
      * Sets the longitude of the object.
      *
-     * @param lng The longitude of the object.
+     * @return location The location of the object.
      */
-    public void setLng(Double lng) {
-        this.lng = lng;
+    public GeoJsonPoint getLocation() {
+        return location;
     }
 
+    /**
+     * Gets the location of the object.
+     *
+     * @param location The location of the object.
+     */
+    public void setLocation(GeoJsonPoint location) {
+        this.location = location;
+    }
+
+    /**
+     * Retrieves the user ID invoker associated with the SuperAppObjectEntity.
+     *
+     * @return the user ID invoker
+     */
     public UserIdInvoker getUserIdInvoker() {
         return userIdInvoker;
     }
 
+    /**
+     * Sets the user ID invoker for the SuperAppObjectEntity.
+     *
+     * @param userIdInvoker the user ID invoker to set
+     */
     public void setUserIdInvoker(UserIdInvoker userIdInvoker) {
         this.userIdInvoker = userIdInvoker;
     }
@@ -196,45 +216,90 @@ public class SuperAppObjectEntity {
         this.objectDetails = objectDetails;
     }
 
-    public List<SuperAppObjectEntity> getChildren() {
+    /**
+     * Retrieves the children of the SuperAppObjectEntity.
+     *
+     * @return the set of children
+     */
+    public Set<SuperAppObjectEntity> getChildren() {
         return children;
     }
 
-    public void setChildren(List<SuperAppObjectEntity> children) {
+    /**
+     * Sets the children of the SuperAppObjectEntity.
+     *
+     * @param children the set of children to set
+     */
+    public void setChildren(Set<SuperAppObjectEntity> children) {
         this.children = children;
     }
 
-    public List<SuperAppObjectEntity> getParents() {
+    /**
+     * Retrieves the parents of the SuperAppObjectEntity.
+     *
+     * @return the set of parents
+     */
+    public Set<SuperAppObjectEntity> getParents() {
         return parents;
     }
 
-    public void setParents(List<SuperAppObjectEntity> parents) {
+    /**
+     * Sets the parents of the SuperAppObjectEntity.
+     *
+     * @param parents the set of parents to set
+     */
+    public void setParents(Set<SuperAppObjectEntity> parents) {
         this.parents = parents;
     }
 
+    /**
+     * Adds a child SuperAppObjectEntity to the set of children.
+     *
+     * @param child the child to add
+     * @return true if the child is successfully added, false otherwise
+     */
     public boolean addChild(SuperAppObjectEntity child) {
         return this.children.add(child);
     }
 
+    /**
+     * Adds a parent SuperAppObjectEntity to the set of parents.
+     *
+     * @param parent the parent to add
+     * @return true if the parent is successfully added, false otherwise
+     */
     public boolean addParent(SuperAppObjectEntity parent) {
         return this.parents.add(parent);
     }
 
+    /**
+     * Returns a string representation of the SuperAppObjectEntity.
+     *
+     * @return a string representation of the object
+     */
+
     @Override
     public String toString() {
-        return "ObjectEntity{" +
+        return "SuperAppObjectEntity{" +
                 "id='" + id + '\'' +
                 ", type='" + type + '\'' +
                 ", alias='" + alias + '\'' +
                 ", active=" + active +
                 ", creationTimeStamp=" + creationTimeStamp +
-                ", lat=" + lat +
-                ", lng=" + lng +
+                ", location=" + location +
                 ", userIdInvoker=" + userIdInvoker +
                 ", objectDetails=" + objectDetails +
+                ", children=" + children +
+                ", parents=" + parents +
                 '}';
     }
 
+    /**
+     * Checks if the SuperAppObjectEntity is equal to another object.
+     *
+     * @param o the object to compare
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -243,8 +308,13 @@ public class SuperAppObjectEntity {
         return this.id.equals(that.getId());
     }
 
+    /**
+     * Generates a hash code for the SuperAppObjectEntity.
+     *
+     * @return the hash code value
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, alias, active, creationTimeStamp, lat, lng, userIdInvoker, objectDetails, children, parents);
+        return Objects.hash(id);
     }
 }

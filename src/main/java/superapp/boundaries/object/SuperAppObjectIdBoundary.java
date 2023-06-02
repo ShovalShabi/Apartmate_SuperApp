@@ -85,6 +85,14 @@ public class SuperAppObjectIdBoundary {
                 '}';
     }
 
+    /**
+     * Checks if this SuperAppObjectIdBoundary is equal to another object.
+     * <p>
+     * Two SuperAppObjectIdBoundary objects are considered equal if they have the same values for the 'superapp' and 'internalObjectId' properties.
+     *
+     * @param o the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,6 +101,11 @@ public class SuperAppObjectIdBoundary {
         return Objects.equals(superapp, that.superapp) && Objects.equals(internalObjectId, that.internalObjectId);
     }
 
+    /**
+     * Returns the hash code value for this SuperAppObjectIdBoundary.
+     * The hash code is generated based on the 'superapp' and 'internalObjectId' properties.
+     * @return the hash code value for this SuperAppObjectIdBoundary
+     */
     @Override
     public int hashCode() {
         return Objects.hash(superapp, internalObjectId);
