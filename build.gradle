@@ -1,0 +1,82 @@
+plugins {
+    id 'java' // Apply the Java plugin for Java project support
+    id 'org.springframework.boot' version '3.1.0' // Apply the Spring Boot plugin with version 3.0.6
+    id 'io.spring.dependency-management' version '1.1.0' // Apply the Spring Dependency Management plugin with version 1.1.0
+}
+
+group = 'com.example' // Set the project group
+version = '1.0.0-FINAL_SPRINT' // Set the project version
+sourceCompatibility = '17' // Set the Java source compatibility to Java 17
+
+repositories {
+    mavenCentral() // Configure the Maven Central repository for dependency resolution
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb' // Add Spring Boot starter for MongoDB
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // Add Spring Boot starter for validation support
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Add Spring Boot starter for web support
+
+    implementation 'org.springframework.boot:spring-boot-starter-integration' // Add Spring Boot starter for integration support
+    implementation 'org.springframework.boot:spring-boot-starter-artemis' // Add Spring Boot starter for Artemis messaging
+    implementation 'org.springframework.integration:spring-integration-http' // Add Spring Integration HTTP module
+    implementation 'org.springframework.integration:spring-integration-jms' // Add Spring Integration JMS module
+    implementation 'org.springframework.integration:spring-integration-mongodb' // Add Spring Integration MongoDB module
+    implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+    implementation 'org.json:json:20230227' // Add JSON library
+    implementation 'com.squareup.okhttp3:okhttp:3.14.6'
+
+    implementation 'org.jboss.logmanager:jboss-logmanager:2.1.19.Final' // Add the JBoss LogManager dependency
+
+
+    runtimeOnly 'org.apache.activemq:artemis-jms-server:2.28.0' // Add Artemis JMS server for runtime
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // Add Spring Boot starter for testing
+    testImplementation 'org.springframework.integration:spring-integration-test' // Add Spring Integration test module
+
+    testImplementation 'org.testcontainers:testcontainers:1.16.0' // Add Testcontainers library for testing with containers
+    testImplementation 'org.testcontainers:mongodb:1.16.0' // Add Testcontainers MongoDB module
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform() // Use JUnit Platform for running tests
+}
+
+test {
+    useJUnitPlatform() // Use JUnit Platform for running tests
+    testLogging {
+        events "passed", "skipped", "failed" // Configure test logging events
+    }
+    systemProperty "key", "value" // Set a system property for tests
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager" // Set the java.util.logging.manager system property
+    testLogging.showStandardStreams = true // Show standard output and error streams in test logs
+}
+
+bootRun.dependsOn(test) // Make bootRun task depend on the test task
+
+// Configuration for development database
+ext {
+    mongodbDevDatabaseName = 'developmentdb' // Set the name of the development MongoDB database
+    mongodbDevHost = 'localhost' // Set the host of the development MongoDB server
+    mongodbDevPort = '27017' // Set the port of the development MongoDB server
+}
+
+// Configuration for testing database
+ext {
+    mongodbTestDatabaseName = 'SuperAppTestDB' // Set the name of the testing MongoDB database
+    mongodbTestHost = 'localhost' // Set the host of the testing MongoDB server
+    mongodbTestPort = '27017' // Set the port of the testing MongoDB server
+}
+
+configurations {
+    developmentOnly // Create a configuration for development dependencies
+    testImplementation.extendsFrom(developmentOnly) // Extend testImplementation configuration from developmentOnly
+}
+
+
+tasks.withType(Test).configureEach {
+    systemProperty 'spring.data.mongodb.database', mongodbTestDatabaseName // Set MongoDB database property for tests
+    systemProperty 'spring.data.mongodb.host', mongodbTestHost // Set MongoDB host property for tests
+    systemProperty 'spring.data.mongodb.port', mongodbTestPort // Set MongoDB port property for tests
+}
